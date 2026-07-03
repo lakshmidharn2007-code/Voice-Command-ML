@@ -61,7 +61,7 @@ export default function VoiceApp() {
 
       case "help":
         setMessage(
-          "Available commands: open youtube, open google, open github, open chatgpt, clear screen."
+          "Available commands: open dashboard, open projects, open notes, open youtube, open google, open github, open chatgpt, search, clear screen, help."
         );
         break;
 
@@ -111,7 +111,11 @@ export default function VoiceApp() {
       setMessage("Predicting intent...");
 
       try {
-        const res = await fetch("http://127.0.0.1:8000/", {
+        const apiUrl =
+          process.env.NEXT_PUBLIC_API_URL ||
+          (process.env.NODE_ENV === "production" ? "/api/predict" : "http://127.0.0.1:8000/");
+
+        const res = await fetch(apiUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
