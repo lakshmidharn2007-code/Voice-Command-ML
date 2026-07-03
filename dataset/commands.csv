@@ -1,0 +1,91 @@
+text,intent
+open dashboard,open_dashboard
+go to dashboard,open_dashboard
+show dashboard,open_dashboard
+take me to dashboard,open_dashboard
+open the dashboard,open_dashboard
+display dashboard,open_dashboard
+move to dashboard,open_dashboard
+dashboard please,open_dashboard
+i want dashboard,open_dashboard
+bring up dashboard,open_dashboard
+launch dashboard,open_dashboard
+switch to dashboard,open_dashboard
+open my dashboard,open_dashboard
+show me dashboard,open_dashboard
+navigate to dashboard,open_dashboard
+open projects,open_projects
+show projects,open_projects
+go to projects,open_projects
+take me to projects,open_projects
+open the projects page,open_projects
+display projects,open_projects
+project section,open_projects
+show my projects,open_projects
+navigate to projects,open_projects
+bring up projects,open_projects
+launch projects,open_projects
+i want projects,open_projects
+move to projects,open_projects
+open project area,open_projects
+switch to projects,open_projects
+open notes,open_notes
+show notes,open_notes
+go to notes,open_notes
+take me to notes,open_notes
+open the notes page,open_notes
+display notes,open_notes
+show my notes,open_notes
+bring up notes,open_notes
+launch notes,open_notes
+move to notes,open_notes
+i want notes,open_notes
+navigate to notes,open_notes
+open note section,open_notes
+switch to notes,open_notes
+show note page,open_notes
+search react,search
+search python,search
+search machine learning,search
+find react projects,search
+look for python notes,search
+search web development,search
+find ai projects,search
+look for dashboard items,search
+search javascript,search
+find machine learning notes,search
+search for projects,search
+look for notes,search
+find react dashboard,search
+search data science,search
+find frontend content,search
+clear input,clear
+clear screen,clear
+clear everything,clear
+reset screen,clear
+remove text,clear
+erase input,clear
+wipe screen,clear
+delete search,clear
+clear the page,clear
+reset everything,clear
+remove everything,clear
+empty the screen,clear
+clear current text,clear
+clean the input,clear
+start fresh,clear
+help me,help
+show help,help
+what can i say,help
+list commands,help
+display help,help
+i need help,help
+how do i use this,help
+show available commands,help
+open help,help
+help section,help
+what commands are available,help
+guide me,help
+tell me the commands,help
+how can i use voice commands,help
+assist me,help
