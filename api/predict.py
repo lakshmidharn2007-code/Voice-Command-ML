@@ -35,6 +35,10 @@ def home():
         "dataset_size": metadata.get("dataset_size", None)
     }
 
+@app.get("/api/predict")
+def home_api():
+    return home()
+
 @app.get("/debug")
 def debug():
     return {
@@ -44,8 +48,7 @@ def debug():
         "accuracy": metadata.get("accuracy", None)
     }
 
-@app.post("/")
-def predict(request: PredictRequest):
+def run_prediction(request: PredictRequest):
     text = request.text.strip().lower()
 
     if not text:
@@ -80,3 +83,11 @@ def predict(request: PredictRequest):
         "confidence": confidence,
         "top_predictions": top_predictions
     }
+
+@app.post("/")
+def predict(request: PredictRequest):
+    return run_prediction(request)
+
+@app.post("/api/predict")
+def predict_api(request: PredictRequest):
+    return run_prediction(request)
