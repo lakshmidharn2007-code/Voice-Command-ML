@@ -19,18 +19,90 @@ const commandMap: Record<string, string> = {
   search: "Search",
   clear: "Clear Screen",
   help: "Help",
-  open_youtube: "Open YouTube",
-  open_google: "Open Google",
-  open_github: "Open GitHub",
-  open_chatgpt: "Open ChatGPT",
+  open_website: "Open Website",
 };
 
-const websiteMap: Record<string, string> = {
-  open_youtube: "https://www.youtube.com",
-  open_google: "https://www.google.com",
-  open_github: "https://github.com",
-  open_chatgpt: "https://chat.openai.com",
+// Known aliases -> real URLs. Add more any time without retraining the model.
+const siteAliases: Record<string, string> = {
+  youtube: "https://www.youtube.com",
+  "you tube": "https://www.youtube.com",
+  google: "https://www.google.com",
+  gemini: "https://gemini.google.com",
+  chatgpt: "https://chat.openai.com",
+  "chat gpt": "https://chat.openai.com",
+  gpt: "https://chat.openai.com",
+  github: "https://github.com",
+  "git hub": "https://github.com",
+  gmail: "https://mail.google.com",
+  "google mail": "https://mail.google.com",
+  maps: "https://maps.google.com",
+  "google maps": "https://maps.google.com",
+  drive: "https://drive.google.com",
+  "google drive": "https://drive.google.com",
+  calendar: "https://calendar.google.com",
+  "google calendar": "https://calendar.google.com",
+  netflix: "https://www.netflix.com",
+  spotify: "https://open.spotify.com",
+  amazon: "https://www.amazon.com",
+  instagram: "https://www.instagram.com",
+  facebook: "https://www.facebook.com",
+  twitter: "https://twitter.com",
+  x: "https://x.com",
+  whatsapp: "https://web.whatsapp.com",
+  reddit: "https://www.reddit.com",
+  wikipedia: "https://www.wikipedia.org",
+  linkedin: "https://www.linkedin.com",
+  outlook: "https://outlook.com",
+  bing: "https://www.bing.com",
+  duckduckgo: "https://duckduckgo.com",
 };
+
+// Strips filler words around the site name, e.g. "please go to the youtube website" -> "youtube"
+function extractSiteName(spokenText: string): string {
+  let t = spokenText.toLowerCase().trim();
+
+  const leadPatterns = [
+    /^i want to open /, /^i want /,
+    /^open the /, /^open my /, /^open /,
+    /^go to /, /^take me to /, /^navigate to /,
+    /^switch to /, /^bring up /, /^pull up /,
+    /^show me /, /^show /, /^display /,
+    /^launch /, /^start /, /^play /,
+  ];
+  for (const p of leadPatterns) t = t.replace(p, "");
+
+  t = t
+    .replace(/ website$/, "")
+    .replace(/ please$/, "")
+    .replace(/ page$/, "")
+    .trim();
+
+  return t;
+}
+
+// Resolves a spoken site name to a URL. Falls back to a Google search
+// for anything not in the known alias list, so it never just does nothing.
+function resolveWebsiteUrl(spokenText: string): { url: string; label: string } {
+  const siteName = extractSiteName(spokenText);
+
+  if (siteAliases[siteName]) {
+    return { url: siteAliases[siteName], label: siteName };
+  }
+
+  // Fuzzy fallback: check if any known alias is contained in the phrase
+  for (const key of Object.keys(siteAliases)) {
+    if (siteName.includes(key)) {
+      return { url: siteAliases[key], label: key };
+    }
+  }
+
+  // Unknown site: don't fail silently, search for it instead
+  const query = encodeURIComponent(siteName || spokenText);
+  return {
+    url: `https://www.google.com/search?q=${query}`,
+    label: siteName || spokenText,
+  };
+}
 
 export default function VoiceApp() {
   const [listening, setListening] = useState(false);
@@ -45,9 +117,10 @@ export default function VoiceApp() {
   };
 
   const runIntentAction = (predicted: string, spokenText: string) => {
-    if (websiteMap[predicted]) {
-      setMessage(`Opening ${commandMap[predicted] || predicted}...`);
-      openInNewTab(websiteMap[predicted]);
+    if (predicted === "open_website") {
+      const { url, label } = resolveWebsiteUrl(spokenText);
+      setMessage(`Opening ${label}...`);
+      openInNewTab(url);
       return;
     }
 
@@ -61,7 +134,7 @@ export default function VoiceApp() {
 
       case "help":
         setMessage(
-          "Available commands: open dashboard, open projects, open notes, open youtube, open google, open github, open chatgpt, search, clear screen, help."
+          "Available commands: open dashboard, open projects, open notes, search, clear screen, help, or say \"open <any website>\" (e.g. open gemini, open netflix)."
         );
         break;
 
@@ -163,16 +236,16 @@ export default function VoiceApp() {
   };
 
   return (
-    <main className="min-h-screen bg-[#0b1020] text-white">
-      <div className="mx-auto max-w-6xl px-6 py-12">
-        <div className="mb-10 rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-xl">
-          <div className="mb-4 flex items-center gap-3">
-            <div className="rounded-2xl bg-cyan-400/10 p-3 text-cyan-300">
+    <main className="page-wrap">
+      <div className="container">
+        <div className="hero-card">
+          <div className="hero-header">
+            <div className="hero-icon">
               <Sparkles className="h-6 w-6" />
             </div>
             <div>
-              <h1 className="text-4xl font-bold tracking-tight">Voice Command ML System</h1>
-              <p className="mt-2 text-white/70">
+              <h1 className="hero-title">Voice Command ML System</h1>
+              <p className="hero-subtitle">
                 Browser speech recognition + Python ML intent classification + Vercel deployment.
               </p>
             </div>
@@ -181,35 +254,35 @@ export default function VoiceApp() {
           <button
             onClick={startListening}
             disabled={listening || loading}
-            className="mt-6 inline-flex items-center gap-2 rounded-2xl bg-cyan-400 px-6 py-3 font-semibold text-black transition hover:bg-cyan-300 disabled:opacity-60"
+            className={`mic-button${listening ? " listening" : ""}`}
           >
             {loading ? (
-              <Loader2 className="h-5 w-5 animate-spin" />
+              <Loader2 className="h-5 w-5 spin" />
             ) : (
               <Mic className="h-5 w-5" />
             )}
             {listening ? "Listening..." : loading ? "Processing..." : "Start Voice Command"}
           </button>
 
-          <p className="mt-4 text-sm text-white/70">{message}</p>
+          <p className="status-message">{message}</p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
-            <h2 className="text-lg font-semibold">Transcript</h2>
-            <p className="mt-3 text-white/80">{transcript || "No speech captured yet."}</p>
-          </div>
-
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
-            <h2 className="text-lg font-semibold">Predicted Intent</h2>
-            <p className="mt-3 text-cyan-300">
-              {intent ? commandMap[intent] || intent : "No prediction yet."}
+        <div className="info-grid">
+          <div className="info-card">
+            <h2>Transcript</h2>
+            <p className={transcript ? "" : "placeholder"}>
+              {transcript || "No speech captured yet."}
             </p>
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
-            <h2 className="text-lg font-semibold">Confidence</h2>
-            <p className="mt-3 text-white/80">
+          <div className="info-card intent">
+            <h2>Predicted Intent</h2>
+            <p>{intent ? commandMap[intent] || intent : "No prediction yet."}</p>
+          </div>
+
+          <div className="info-card">
+            <h2>Confidence</h2>
+            <p className={confidence !== null ? "" : "placeholder"}>
               {confidence !== null ? `${(confidence * 100).toFixed(2)}%` : "Not available"}
             </p>
           </div>

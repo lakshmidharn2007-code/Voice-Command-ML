@@ -89,63 +89,62 @@ guide me,help
 tell me the commands,help
 how can i use voice commands,help
 assist me,help
-open youtube,open_youtube
-go to youtube,open_youtube
-launch youtube,open_youtube
-show youtube,open_youtube
-take me to youtube,open_youtube
-open the youtube website,open_youtube
-i want youtube,open_youtube
-open youtube please,open_youtube
-switch to youtube,open_youtube
-bring up youtube,open_youtube
-play youtube,open_youtube
-navigate to youtube,open_youtube
-pull up youtube,open_youtube
-open you tube,open_youtube
-start youtube,open_youtube
-open google,open_google
-go to google,open_google
-launch google,open_google
-show google,open_google
-take me to google,open_google
-open the google website,open_google
-i want google,open_google
-open google search,open_google
-switch to google,open_google
-bring up google,open_google
-open google please,open_google
-navigate to google,open_google
-pull up google,open_google
-search on google,open_google
-start google,open_google
-open github,open_github
-go to github,open_github
-launch github,open_github
-show github,open_github
-take me to github,open_github
-open the github website,open_github
-i want github,open_github
-open github please,open_github
-switch to github,open_github
-bring up github,open_github
-navigate to github,open_github
-pull up github,open_github
-open git hub,open_github
-open my github,open_github
-start github,open_github
-open chatgpt,open_chatgpt
-go to chatgpt,open_chatgpt
-launch chatgpt,open_chatgpt
-show chatgpt,open_chatgpt
-take me to chatgpt,open_chatgpt
-open the chatgpt website,open_chatgpt
-i want chatgpt,open_chatgpt
-open chat gpt,open_chatgpt
-switch to chatgpt,open_chatgpt
-bring up chatgpt,open_chatgpt
-navigate to chatgpt,open_chatgpt
-pull up chatgpt,open_chatgpt
-open open ai chat,open_chatgpt
-start chatgpt,open_chatgpt
-open gpt,open_chatgpt
+open youtube,open_website
+open google,open_website
+open gemini,open_website
+open github,open_website
+open chatgpt,open_website
+open netflix,open_website
+open spotify,open_website
+open amazon,open_website
+open gmail,open_website
+open instagram,open_website
+open facebook,open_website
+open twitter,open_website
+open whatsapp,open_website
+open reddit,open_website
+open wikipedia,open_website
+open linkedin,open_website
+open outlook,open_website
+open google maps,open_website
+open google drive,open_website
+open google calendar,open_website
+open bing,open_website
+go to youtube,open_website
+go to gemini,open_website
+go to netflix,open_website
+go to instagram,open_website
+go to reddit,open_website
+go to linkedin,open_website
+launch spotify,open_website
+launch whatsapp,open_website
+launch chatgpt,open_website
+launch gemini,open_website
+show me youtube,open_website
+show me netflix,open_website
+show me gmail,open_website
+take me to github,open_website
+take me to amazon,open_website
+take me to twitter,open_website
+switch to google,open_website
+switch to gemini,open_website
+switch to facebook,open_website
+bring up youtube,open_website
+bring up spotify,open_website
+bring up outlook,open_website
+pull up chatgpt,open_website
+pull up gemini,open_website
+pull up instagram,open_website
+navigate to github,open_website
+navigate to wikipedia,open_website
+start netflix,open_website
+start spotify,open_website
+i want to open gemini,open_website
+i want to open youtube,open_website
+i want gmail,open_website
+open the gemini website,open_website
+open the netflix website,open_website
+open chat gpt,open_website
+open git hub,open_website
+open you tube,open_website
+open google chat,open_website
